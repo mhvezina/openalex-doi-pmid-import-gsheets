@@ -7,12 +7,12 @@
 
 ## 1. Description de l'outil (English version follows)
 
-Cet outil permet d'interroger l'API OpenAlex à partir d'une liste de DOI et d'obtenir un tableau synthétique dans Google Sheets.  
+Cet outil permet d'interroger l'API OpenAlex à partir d'une liste de DOI et/ou de PMID (Pubmed ID) et d'obtenir un tableau synthétique dans Google Sheets.  
 Plus précisément, le script :
 
-- lit les DOI saisis dans l'onglet `DOI` ;
+- lit les DOI et PMID saisis dans l'onglet `DOI_ou/or_PMID` ;
 - envoie des requêtes à l'API [https://api.openalex.org/works](https://api.openalex.org/works) avec des filtres optionnels (années, type de document, accès ouvert, include_xpac) configurés dans l'onglet `Paramètres/Parameters` ;
-- récupère, pour chaque DOI trouvé, des métadonnées de base (titre, année, type, auteurs) et des informations de libre accès basées sur `best_oa_location` (source, type, licence, version, URL OA) et `open_access` (is_oa, oa_status) ;
+- récupère, pour chaque DOI/PMID trouvé, des métadonnées de base (titre, année, type, auteurs) et des informations de libre accès basées sur `best_oa_location` (source, type, licence, version, URL OA) et `open_access` (is_oa, oa_status) ;
 - écrit les résultats normalisés dans l'onglet `Résultats/Results`, avec une mise en couleur simple (par exemple vert pâle pour les travaux en libre accès).
 
 Dans OpenAlex, `best_oa_location` représente le meilleur point d'accès libre à l'article (en général l'URL la plus stable et utile pour un texte intégral en libre accès, quand disponible).
