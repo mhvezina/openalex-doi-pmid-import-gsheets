@@ -82,9 +82,8 @@ Lors de la première utilisation du menu OpenAlex dans VOTRE copie de la feuille
    - `only_oa` : `TRUE` ou `VRAI` pour ne garder que les travaux en libre accès (laisser vide, ou FAUX/FALSE, pour ne pas filtrer) ;
    - `include_xpac` : `TRUE` ou `VRAI` pour inclure le pack d'extension xpac (DataCite complet et de nombreux dépôts), laisser vide (ou FAUX/FALSE) sinon.
 
-[![Google Sheet - Paramètres/Parameters](images/Parameters.jpg)](images/Parameters.jpg)
+[![Google Sheet - Paramètres/Parameters](images/Parameters_v2.jpg)](images/Parameters_v2.jpg)
 
-Important : La valeur `mailto` doit être renseignée avec votre courriel
 
 
 ### 4.4 Lancer le script et récupérer les résultats
@@ -207,9 +206,8 @@ On the first use of the OpenAlex menu in YOUR copy of the sheet:
    - `only_oa`: `TRUE` or `VRAI` to keep only open access works (leave blank, or set to FALSE, to disable this filter);
    - `include_xpac`: `TRUE` or `VRAI` to include the xpac extension pack (full DataCite corpus and many repositories), leave blank (or set to FALSE) otherwise.
 
-[![Google Sheet - Paramètres/Parameters](images/Parameters.jpg)](images/Parameters.jpg)
+[![Google Sheet - Paramètres/Parameters](images/Parameters_v2.jpg)](images/Parameters_v2.jpg)
 
-Important : `mailto` value must be filled with your email address.
 
 
 ### 4.4 Run the script and retrieve the results
