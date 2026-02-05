@@ -1,6 +1,6 @@
 // OpenAlex_DOI_PMID_Importation pour Google Sheets
 // (OpenAlex_DOI_PMID_Import for Google Sheets)
-// Version : 1.1.0
+// Version : 1.0.0
 // Date : 2025-12-15
 //
 // (c) Marie-Helene Vezina, Direction des Bibliotheques, Universite de Montreal
@@ -576,3 +576,4 @@ function normalizeDoi_(value) {
   var v = (value || '').toString().trim();
   return v.replace(/^https?:\/\/(dx\.)?doi\.org\//i, '');
 }
+
