@@ -1,7 +1,7 @@
 // OpenAlex_DOI_PMID_Importation pour Google Sheets
-// (OpenAlex_DOI_PMID_Import for Google Sheets)
-// Version : 1.0.0
-// Date : 2025-12-15
+// (OpenAlex_DOI_PMID_Import for Google Sheets)_
+// Version : 1.1.0
+// Date : 2026-02-05
 //
 // (c) Marie-Helene Vezina, Direction des Bibliotheques, Universite de Montreal
 // Distribue sous licence GPL (GNU General Public License), version 3
@@ -40,20 +40,51 @@
 // === Custom menu in Google Sheets ===
 function onOpen() {
   var ui = SpreadsheetApp.getUi();
+
+  // Création du menu OpenAlex
+  // Create the OpenAlex menu
   ui.createMenu('🔓🔑 OpenAlex')
     .addItem('>> Mettre à jour / Update (OpenAlex)', 'runOpenAlexImport')
     .addToUi();
+
+  // Message d'information à l'ouverture du fichier
+  // Information message on file open
+  var message =
+    "-- Français ----------\n" +
+    "❗Lors du premier lancement du menu OpenAlex (>> Mettre à jour / Update (OpenAlex)), Google vous " +
+    "demandera d'autoriser l'exécution du script associé à ce classeur (accès à cette feuille et " +
+    "connexion à l'API OpenAlex). C'est normal : il faut accepter ces autorisations pour que le script " +
+    "puisse interroger OpenAlex et écrire les résultats dans l'onglet Résultats/Results.\n\n" +
+    "Si le script ne répond pas, semble bloqué ou retourne un message de dépassement de délai (time out), " +
+    "il peut être utile de vérifier le statut des services OpenAlex ici :\n" +
+    "🔗 https://status.openalex.org\n\n" +
+    "-- English ----------\n" +
+    "❗On the first run of the OpenAlex menu (>> Mettre à jour / Update (OpenAlex)), Google will ask you " +
+    "to authorize the execution of the script linked to this spreadsheet (access to this sheet and " +
+    "connection to the OpenAlex API). This is expected: you must accept these permissions so that the " +
+    "script can query OpenAlex and write results into the Results sheet.\n\n" +
+    "If the script does not respond, seems stuck, or returns a time out error, you may want to check " +
+    "the status of OpenAlex services here:\n" +
+    "🔗 https://status.openalex.org";
+
+
+  ui.alert(
+    "Informations sur le script OpenAlex / OpenAlex script information",
+    message,
+    ui.ButtonSet.OK
+  );
 }
+
 
 // Point d'entrée principal
 // Main entry point
 function runOpenAlexImport() {
   var ss = SpreadsheetApp.getActive();
   var sheetDois = ss.getSheetByName('DOI ou/or PMID');                // onglet où sont saisis les identifiants à interroger (DOI ou PMID)
-  var sheetParams = ss.getSheetByName('Paramètres/Parameters');       // onglet contenant les filtres (mailto, année, type, only_oa...)
+  var sheetParams = ss.getSheetByName('Paramètres/Parameters');       // onglet contenant les filtres (clé_api, année, type, only_oa...)
   var sheetResults = ss.getSheetByName('Résultats/Results');          // onglet où les résultats sont remplis par le script
   // sheet where DOIs to be queried are entered
-  // sheet containing filters (mailto, year, type, only_oa...)
+  // sheet containing filters (api_key, year, type, only_oa...)
   // sheet where results are populated by the script
 
   if (!sheetDois || !sheetParams || !sheetResults) {
@@ -150,6 +181,12 @@ function runOpenAlexImport() {
 
     dataRange.setBackgrounds(backgrounds);
   }
+  // Placer le focus sur l'onglet Résultats/Results lorsque le script a terminé
+  // Set focus to the Results sheet once the script has finished
+  ss.setActiveSheet(sheetResults);
+  // Optionnel : sélectionner la première cellule de résultats
+  // Optional: select the first result cell
+  sheetResults.setActiveRange(sheetResults.getRange(1, 1));
 }
 
 
@@ -223,8 +260,15 @@ function getParams_(sheetParams) {
     }
   }
 
+  var rawApiKey = map['api_key'] ? map['api_key'].toString().trim() : '';
+  // Si la valeur est le placeholder "YOUR_API_KEY", on la traite comme vide
+  // If the value is the placeholder "YOUR_API_KEY", treat it as empty
+  if (rawApiKey.toUpperCase() === 'YOUR_API_KEY') {
+    rawApiKey = '';
+  }
+
   return {
-    mailto: map['mailto'] ? map['mailto'].toString().trim() : '',
+    api_key: rawApiKey,
     yearMin: map['year_min'] ? parseInt(map['year_min'], 10) : null,
     yearMax: map['year_max'] ? parseInt(map['year_max'], 10) : null,
     type: map['type'] ? map['type'].toString().trim() : '',
@@ -432,8 +476,8 @@ function fetchWorksForIds_(inputs, params) {
         // Add include_xpac=true to the request if enabled in parameters
       }
 
-      if (params.mailto) {
-        queryParts.push('mailto=' + encodeURIComponent(params.mailto));
+      if (params.api_key) {
+        queryParts.push('api_key=' + encodeURIComponent(params.api_key));
       }
 
       var url = baseUrl + '?' + queryParts.join('&');
@@ -524,8 +568,8 @@ function fetchWorksForIds_(inputs, params) {
         queryPartsPmid.push('include_xpac=true');
       }
 
-      if (params.mailto) {
-        queryPartsPmid.push('mailto=' + encodeURIComponent(params.mailto));
+      if (params.api_key) {
+        queryPartsPmid.push('api_key=' + encodeURIComponent(params.api_key));
       }
 
       var urlPmid = baseUrl + '?' + queryPartsPmid.join('&');
@@ -576,4 +620,3 @@ function normalizeDoi_(value) {
   var v = (value || '').toString().trim();
   return v.replace(/^https?:\/\/(dx\.)?doi\.org\//i, '');
 }
-

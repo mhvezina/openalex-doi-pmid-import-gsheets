@@ -2,8 +2,8 @@
 
 ## Version / Version
 
-- Version du script / Script version : **1.0.0**
-- Date de la dernière mise à jour / Last update date: **2025-12-15**
+- Version du script / Script version : **1.1.0**
+- Date de la dernière mise à jour / Last update date: **2026-02-05**
 
 ## 1. Description de l'outil (English version follows)
 
@@ -37,6 +37,8 @@ La feuille Google Sheets modèle (lecture seule) se trouve à l'adresse suivante
 - Accepter les **autorisations d'exécution** Apps Script lors du premier lancement.
 
 ### Autorisations d'exécution Google Apps Script
+
+v1.1.0 - Affichage automatique d'une bulle explicative à l'ouverture du classeur. Le message précise qu'au premier lancement du menu OpenAlex >> Mettre à jour / Update (OpenAlex), Google demandera d'autoriser l'exécution du script (accès à la feuille et appel à l'API OpenAlex), et que cette demande d'autorisation est normale et nécessaire pour écrire les résultats dans l'onglet Résultats/Results.
 
 Lors de la première utilisation du menu OpenAlex dans VOTRE copie de la feuille :
 
@@ -74,7 +76,7 @@ Lors de la première utilisation du menu OpenAlex dans VOTRE copie de la feuille
 
 1. Aller dans l'onglet **`Paramètres/Parameters`**.  
 2. Éditer uniquement la colonne B en suivant les consignes de la colonne A, par exemple :
-   - `mailto` : votre adresse courriel (recommandé vis à vis d'OpenAlex et pour la gestion de charge, "polite pool") ;
+   - `api_key`: votre clé API OpenAlex (gratuite) (recommandée, mais facultative pour un usage limité ou de test) ;
    - `year_min` / `year_max` : années de publication minimale et maximale (format `AAAA`, optionnel) ;
    - `type` : type de document (par exemple `article`, `review`, `dataset`, `book`, etc., optionnel) ;
    - `only_oa` : `TRUE` ou `VRAI` pour ne garder que les travaux en libre accès (laisser vide, ou FAUX/FALSE, pour ne pas filtrer) ;
@@ -122,7 +124,8 @@ En pratique, cela signifie notamment :
 
 - **1.0.0 (2025-12-15)**  
   Première publication publique du script (import de DOI & PMID, filtres de base, couleurs OA, best_oa_location, include_xpac).
-
+- **1.1.0 (2026-02-05)**  
+  Ajout d'un message d'information à l'ouverture du classeur (autorisation du script, statut des services OpenAlex) et remplacement du paramètre `mailto` par `api_key` pour l'authentification auprès de l'API OpenAlex.  
 
 ---
 ---
@@ -160,6 +163,8 @@ The read-only Google Sheets template is available at:
 
 ### Google Apps Script authorization
 
+A dialog is now shown automatically when the spreadsheet is opened. The message explains that on the first run of the menu OpenAlex >> Mettre à jour / Update (OpenAlex), Google will ask the user to authorize the execution of the script (access to the sheet and calls to the OpenAlex API), and that this authorization request is expected and required for the script to write results into the Résultats/Results sheet.
+
 On the first use of the OpenAlex menu in YOUR copy of the sheet:
 
 1. Google will display a message indicating that this script wants to run under your account.
@@ -196,7 +201,7 @@ On the first use of the OpenAlex menu in YOUR copy of the sheet:
 
 1. Go to the **`Paramètres/Parameters`** sheet.  
 2. Edit **column B only**, following the instructions in column A, for example:
-   - `mailto`: your email address (recommended for OpenAlex "polite pool" and load management);
+   - `api_key`: your (free) OpenAlex API key (recommended, but optional for limited or test use);
    - `year_min` / `year_max`: minimum and maximum publication years (format `YYYY`, optional);
    - `type`: document type (for example `article`, `review`, `dataset`, `book`, etc., optional);
    - `only_oa`: `TRUE` or `VRAI` to keep only open access works (leave blank, or set to FALSE, to disable this filter);
@@ -242,5 +247,8 @@ In practice, this means:
 
 ## 6. Version history
 
-1.0.0 (2025-12-15)
+- **1.0.0 (2025-12-15)**
 First public release of the script (DOI & PMID import, basic filters, OA color coding, best_oa_location, include_xpac).
+
+- **1.1.0 (2026-02-05)**
+Added an information message on spreadsheet open (script authorization, OpenAlex service status) and replaced the `mailto` parameter with `api_key` for authentication with the OpenAlex API.
